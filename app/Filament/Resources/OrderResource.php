@@ -16,6 +16,7 @@ use Filament\Tables\Table;
 use Filament\Forms\Set;
 use Filament\Forms\Get;
 use Illuminate\Support\Number;
+use App\Filament\Resources\OrderResource\RelationManagers\AddressRelationManager;
 
 class OrderResource extends Resource
 {
@@ -226,8 +227,18 @@ class OrderResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            AddressRelationManager::class,
         ];
+    }
+
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::count();
+    }
+
+    public static function getNavigationBadgeColor(): string
+    {
+        return static::getModel()::count() > 0 ? 'warning' : 'secondary';
     }
 
     public static function getPages(): array
