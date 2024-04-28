@@ -7,6 +7,7 @@ use App\Filament\Resources\OrderResource\RelationManagers;
 use App\Models\Order;
 
 use App\Models\Product;
+use Filament\Actions\ActionGroup;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -148,11 +149,11 @@ class OrderResource extends Resource
                                     ->label('Grand Total')
                                     ->content(function (Get $get, Set $set) {
                                         $total = 0;
-                                        if (!$repeater = $get('items')) {
+                                        if (!$repeaters = $get('items')) {
                                             return $total;
                                         }
 
-                                        foreach ($repeater as $key => $repeater) {
+                                        foreach ($repeaters as $key => $repeater) {
                                             $total += $get("items.{$key}.total_amount");
                                         }
                                         return Number::currency($total, 'bdt');
@@ -169,14 +170,51 @@ class OrderResource extends Resource
     {
         return $table
             ->columns([
-                //
+                Tables\Columns\TextColumn::make('user.name')
+                    ->label('Customer')
+                    ->searchable()
+                    ->sortable(),
+
+                Tables\Columns\TextColumn::make('grand_total')
+                    ->numeric()
+                    ->sortable()
+                    ->money('bdt'),
+
+                Tables\Columns\TextColumn::make('payment_method')
+                    ->sortable()
+                    ->searchable(),
+
+                Tables\Columns\TextColumn::make('payment_status')
+                    ->sortable()
+                    ->searchable(),
+
+                Tables\Columns\TextColumn::make('currency')
+                    ->sortable()
+                    ->searchable(),
+
+                Tables\Columns\TextColumn::make('shipping_method')
+                    ->sortable()
+                    ->searchable(),
+
+                Tables\Columns\SelectColumn::make('status')
+                    ->sortable()
+                    ->searchable()
+                    ->options([
+                        'new' => 'New',
+                        'processing' => 'Processing',
+                        'shipped' => 'Shipped',
+                        'completed' => 'Completed',
+                        'canceled' => 'Canceled',
+                    ])
             ])
             ->filters([
                 //
             ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\ActionGroup::make([
+                   Tables\Actions\ViewAction::make(),
+                   Tables\Actions\EditAction::make(),
+               ])
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
