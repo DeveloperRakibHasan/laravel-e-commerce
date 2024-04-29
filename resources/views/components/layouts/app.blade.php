@@ -6,8 +6,12 @@
 
         <title>{{ $title ?? 'Tech Store' }}</title>
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+        @livewireStyles
     </head>
-    <body>
-        {{ $slot }}
+    <body class="bg-slate-200 dark:bg-slate-700">
+        <main>
+            {{ $slot }}
+        </main>
+        @livewireScripts
     </body>
 </html>
