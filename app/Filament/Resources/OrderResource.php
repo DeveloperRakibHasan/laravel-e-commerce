@@ -7,7 +7,6 @@ use App\Filament\Resources\OrderResource\RelationManagers;
 use App\Models\Order;
 
 use App\Models\Product;
-use Filament\Actions\ActionGroup;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -209,7 +208,14 @@ class OrderResource extends Resource
                     ])
             ])
             ->filters([
-                //
+               Tables\Filters\SelectFilter::make('status')
+                   ->options([
+                       'new' => 'New',
+                       'processing' => 'Processing',
+                       'shipped' => 'Shipped',
+                       'completed' => 'Completed',
+                       'canceled' => 'Canceled',
+                   ])
             ])
             ->actions([
                 Tables\Actions\ActionGroup::make([
