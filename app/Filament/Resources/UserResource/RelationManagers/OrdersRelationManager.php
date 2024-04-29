@@ -30,6 +30,16 @@ class OrdersRelationManager extends RelationManager
                 Tables\Columns\TextColumn::make('id')
                     ->label('Order ID')
                     ->searchable(),
+                Tables\Columns\TextColumn::make('status')
+                    ->badge()
+                    ->color(fn(string $state):string => match ($state) {
+                        'new' => 'info',
+                        'processing' => 'warning',
+                        'shipped' => 'success',
+                        'completed' => 'success',
+                        'canceled' => 'danger',
+                    })
+//                    ->alignCenter(),
             ])
             ->filters([
                 //
