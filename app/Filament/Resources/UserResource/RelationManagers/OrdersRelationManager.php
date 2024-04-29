@@ -18,9 +18,7 @@ class OrdersRelationManager extends RelationManager
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('id')
-                    ->required()
-                    ->maxLength(255),
+              //
             ]);
     }
 
@@ -29,7 +27,9 @@ class OrdersRelationManager extends RelationManager
         return $table
             ->recordTitleAttribute('id')
             ->columns([
-                Tables\Columns\TextColumn::make('id'),
+                Tables\Columns\TextColumn::make('id')
+                    ->label('Order ID')
+                    ->searchable(),
             ])
             ->filters([
                 //
