@@ -79,7 +79,7 @@ class OrderResource extends Resource
                                         'new' => 'heroicon-m-sparkles',
                                         'processing' => 'heroicon-m-cog',
                                         'shipped' => 'heroicon-m-truck',
-                                        'completed' => 'heroicon-m-check-circle',
+                                        'completed' => 'heroicon-m-check-badge',
                                         'canceled' => 'heroicon-m-x-circle',
                                     ])
                                     ->default('new'),

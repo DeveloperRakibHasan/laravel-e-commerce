@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\UserResource\RelationManagers;
 
+use App\Filament\Resources\OrderResource;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
@@ -9,6 +10,7 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Models\Order;
 
 class OrdersRelationManager extends RelationManager
 {
@@ -39,7 +41,27 @@ class OrdersRelationManager extends RelationManager
                         'completed' => 'success',
                         'canceled' => 'danger',
                     })
+                    ->icon(fn(string $state):string => match ($state) {
+                        'new' => 'heroicon-m-sparkles',
+                        'processing' => 'heroicon-m-cog',
+                        'shipped' => 'heroicon-m-truck',
+                        'completed' => 'heroicon-m-check-badge',
+                        'canceled' => 'heroicon-m-x-circle',
+                    }),
 //                    ->alignCenter(),
+                Tables\Columns\TextColumn::make('payment_method')
+                    ->sortable()
+                    ->searchable(),
+
+                Tables\Columns\TextColumn::make('payment_status')
+                    ->sortable()
+                    ->badge()
+                    ->color('warning')
+                    ->searchable(),
+
+                Tables\Columns\TextColumn::make('created_at')
+                    ->label('Order Date')
+                    ->dateTime('d-M-Y'),
             ])
             ->filters([
                 //
@@ -48,7 +70,10 @@ class OrdersRelationManager extends RelationManager
                 Tables\Actions\CreateAction::make(),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\Action::make('view Order')
+                    ->url(fn(Order $record): string => OrderResource::getUrl('view', ['record' => $record]))
+                    ->color('info')
+                    ->icon('heroicon-s-eye'),
                 Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
