@@ -13,6 +13,8 @@ use App\Livewire\Auth\LoginPage;
 use App\Livewire\Auth\RegisterPage;
 use App\Livewire\Auth\ForgotPasswordPage;
 use App\Livewire\Auth\ResetPasswordPage;
+use App\Livewire\SuccessPage;
+use App\Livewire\CancelPage;
 
 
 Route::get('/', HomePage::class);
@@ -28,3 +30,6 @@ Route::get('/login', LoginPage::class);
 Route::get('/register', RegisterPage::class);
 Route::get('/forgot', ForgotPasswordPage::class);
 Route::get('/reset', ResetPasswordPage::class);
+
+Route::get('/success', SuccessPage::class);
+Route::get('/cancel', CancelPage::class);
