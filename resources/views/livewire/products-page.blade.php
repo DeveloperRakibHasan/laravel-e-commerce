@@ -7,30 +7,14 @@
                         <h2 class="text-2xl font-bold dark:text-gray-400"> Categories</h2>
                         <div class="w-16 pb-2 mb-6 border-b border-rose-600 dark:border-gray-400"></div>
                         <ul>
-                            <li class="mb-4">
-                                <label for="" class="flex items-center dark:text-gray-400 ">
-                                    <input type="checkbox" class="w-4 h-4 mr-2">
-                                    <span class="text-lg">Smartphones</span>
-                                </label>
-                            </li>
-                            <li class="mb-4">
-                                <label for="" class="flex items-center dark:text-gray-400 ">
-                                    <input type="checkbox" class="w-4 h-4 mr-2 ">
-                                    <span class="text-lg">Laptops</span>
-                                </label>
-                            </li>
-                            <li class="mb-4">
-                                <label for="" class="flex items-center dark:text-gray-400">
-                                    <input type="checkbox" class="w-4 h-4 mr-2">
-                                    <span class="text-lg">Smartwatches</span>
-                                </label>
-                            </li>
-                            <li class="mb-4">
-                                <label for="" class="flex items-center dark:text-gray-400">
-                                    <input type="checkbox" class="w-4 h-4 mr-2">
-                                    <span class="text-lg">Television</span>
-                                </label>
-                            </li>
+                            @foreach($categories as $category)
+                                <li class="mb-4" wire:key="{{ $category->id }}">
+                                    <label for="{{$category->slug}}" class="flex items-center dark:text-gray-400 ">
+                                        <input type="checkbox" id="{{$category->slug}}" value="{{$category->id}}" class="w-4 h-4 mr-2">
+                                        <span class="text-lg">{{$category->name}}</span>
+                                    </label>
+                                </li>
+                            @endforeach
                         </ul>
 
                     </div>
@@ -113,7 +97,7 @@
                                 <div class="border border-gray-300 dark:border-gray-700">
                                     <div class="relative bg-gray-200">
                                         <a wire:navigate href="/products/{{ $product->slug }}" class="">
-                                            <img src="{{ url('storage', $product->image) }}" alt="{{$product->name}}" class="object-cover w-full h-56 mx-auto ">
+                                            <img src="{{ url('storage', $product->images) }}" alt="{{$product->name}}" class="object-cover w-full h-56 mx-auto ">
                                         </a>
                                     </div>
                                     <div class="p-3 ">
@@ -123,7 +107,9 @@
                                             </h3>
                                         </div>
                                         <p class="text-lg ">
-                                            <span class="text-green-600 dark:text-green-600">$800.00</span>
+                                            <span class="text-green-600 dark:text-green-600">
+                                                {{\Illuminate\Support\Number::currency($product->price, 'BDT')}}
+                                            </span>
                                         </p>
                                     </div>
                                     <div class="flex justify-center p-4 border-t border-gray-300 dark:border-gray-700">
@@ -142,30 +128,7 @@
                     </div>
                     <!-- pagination start -->
                     <div class="flex justify-end mt-6">
-                        <nav aria-label="page-navigation">
-                            <ul class="flex list-style-none">
-                                <li class="page-item disabled ">
-                                    <a href="#" class="relative block pointer-events-none px-3 py-1.5 mr-3 text-base text-gray-700 transition-all duration-300  rounded-md dark:text-gray-400 hover:text-gray-100 hover:bg-blue-600">Previous
-                                    </a>
-                                </li>
-                                <li class="page-item ">
-                                    <a href="#" class="relative block px-3 py-1.5 mr-3 text-base hover:text-blue-700 transition-all duration-300 hover:bg-blue-200 dark:hover:text-gray-400 dark:hover:bg-gray-700 rounded-md text-gray-100 bg-blue-400">1
-                                    </a>
-                                </li>
-                                <li class="page-item ">
-                                    <a href="#" class="relative block px-3 py-1.5 text-base text-gray-700 transition-all duration-300 dark:text-gray-400 dark:hover:bg-gray-700 hover:bg-blue-100 rounded-md mr-3  ">2
-                                    </a>
-                                </li>
-                                <li class="page-item ">
-                                    <a href="#" class="relative block px-3 py-1.5 text-base text-gray-700 transition-all duration-300 dark:text-gray-400 dark:hover:bg-gray-700 hover:bg-blue-100 rounded-md mr-3 ">3
-                                    </a>
-                                </li>
-                                <li class="page-item ">
-                                    <a href="#" class="relative block px-3 py-1.5 text-base text-gray-700 transition-all duration-300 dark:text-gray-400 dark:hover:bg-gray-700 hover:bg-blue-100 rounded-md ">Next
-                                    </a>
-                                </li>
-                            </ul>
-                        </nav>
+                       {{$products->links()}}
                     </div>
                     <!-- pagination end -->
                 </div>
