@@ -17,12 +17,18 @@ class ProductsPage extends Component
 
     #[Url]
     public $selected_categories = [];
+    #[Url]
+    public $selected_brands = [];
     public function render()
     {
         $productQuery = Product::query()->where('is_active', 1);
 
         if(!empty($this->selected_categories)){
             $productQuery->whereIn('category_id', $this->selected_categories);
+        }
+
+        if(!empty($this->selected_brands)){
+            $productQuery->whereIn('brand_id', $this->selected_brands);
         }
 
         return view('livewire.products-page', [
