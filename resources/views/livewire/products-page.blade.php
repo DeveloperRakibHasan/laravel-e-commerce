@@ -22,30 +22,16 @@
                         <h2 class="text-2xl font-bold dark:text-gray-400">Brand</h2>
                         <div class="w-16 pb-2 mb-6 border-b border-rose-600 dark:border-gray-400"></div>
                         <ul>
-                            <li class="mb-4">
-                                <label for="" class="flex items-center dark:text-gray-300">
-                                    <input type="checkbox" class="w-4 h-4 mr-2">
-                                    <span class="text-lg dark:text-gray-400">Apple</span>
-                                </label>
-                            </li>
-                            <li class="mb-4">
-                                <label for="" class="flex items-center dark:text-gray-300">
-                                    <input type="checkbox" class="w-4 h-4 mr-2">
-                                    <span class="text-lg dark:text-gray-400">Samsung</span>
-                                </label>
-                            </li>
-                            <li class="mb-4">
-                                <label for="" class="flex items-center dark:text-gray-300">
-                                    <input type="checkbox" class="w-4 h-4 mr-2">
-                                    <span class="text-lg dark:text-gray-400">Nothing</span>
-                                </label>
-                            </li>
-                            <li class="mb-4">
-                                <label for="" class="flex items-center dark:text-gray-300">
-                                    <input type="checkbox" class="w-4 h-4 mr-2">
-                                    <span class="text-lg dark:text-gray-400">One Plus</span>
-                                </label>
-                            </li>
+
+                            @foreach($brands as $brand)
+                                <li class="mb-4" wire:key="{{ $brand->id }}">
+                                    <label for="{{$brand->slug}}" class="flex items-center dark:text-gray-400 ">
+                                        <input type="checkbox" id="{{$brand->slug}}" value="{{$brand->id}}" class="w-4 h-4 mr-2">
+                                        <span class="text-lg">{{$brand->name}}</span>
+                                    </label>
+                                </li>
+                            @endforeach
+
                         </ul>
                     </div>
                     <div class="p-4 mb-5 bg-white border border-gray-200 dark:bg-gray-900 dark:border-gray-900">
@@ -97,7 +83,7 @@
                                 <div class="border border-gray-300 dark:border-gray-700">
                                     <div class="relative bg-gray-200">
                                         <a wire:navigate href="/products/{{ $product->slug }}" class="">
-                                            <img src="{{ url('storage', $product->images) }}" alt="{{$product->name}}" class="object-cover w-full h-56 mx-auto ">
+                                            <img src="{{ url('storage', $product->images ?? 'img/a.avif') }}" alt="{{$product->name}}" class="object-cover w-full h-56 mx-auto ">
                                         </a>
                                     </div>
                                     <div class="p-3 ">
