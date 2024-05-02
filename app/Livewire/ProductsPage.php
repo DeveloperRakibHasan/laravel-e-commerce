@@ -19,6 +19,10 @@ class ProductsPage extends Component
     public $selected_categories = [];
     #[Url]
     public $selected_brands = [];
+    #[Url]
+    public $featured;
+    #[Url]
+    public $on_sale;
     public function render()
     {
         $productQuery = Product::query()->where('is_active', 1);
@@ -29,6 +33,14 @@ class ProductsPage extends Component
 
         if(!empty($this->selected_brands)){
             $productQuery->whereIn('brand_id', $this->selected_brands);
+        }
+
+        if ($this->featured) {
+            $productQuery->where('is_featured', 1);
+        }
+
+        if ($this->on_sale) {
+            $productQuery->where('on_sale', 1);
         }
 
         return view('livewire.products-page', [
