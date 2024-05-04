@@ -66,12 +66,12 @@
                         <span>{{Number::currency(0, 'BDT')}}</span>
                     </div>
                     <hr class="my-2">
-                    <div class="flex justify-between mb-2">
+                    <div class="flex justify-between mb-6">
                         <span class="font-semibold">Total</span>
                         <span class="font-semibold">{{Number::currency($grand_total, 'BDT')}}</span>
                     </div>
                     @if($cart_items)
-                        <button class="bg-blue-500 text-white py-2 px-4 rounded-lg mt-4 w-full">Checkout</button>
+                        <a href="/checkout" class="bg-blue-500 block text-center text-white py-2 px-4 rounded-lg w-full">Checkout</a>
                     @endif
                 </div>
             </div>
