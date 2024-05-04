@@ -6,7 +6,7 @@ use App\Models\Product;
 use Illuminate\Support\Facades\Cookie;
 
 class CartManagement {
-    static public function addItemsToCart($product_id)
+    static public function addItemToCart($product_id)
     {
         $cart_items = self::getCartItemsFromCookie();
         $existing_item = null;
@@ -18,15 +18,15 @@ class CartManagement {
             }
         }
         if ($existing_item !== null) {
-            $cart_items[$existing_item]['quantity'] += 1;
-            $cart_items[$existing_item]['total_amount'] = $cart_items[$existing_item]['quantity'] * $cart_items[$existing_item]['unit_price'];
+            $cart_items[$existing_item]['quantity'] ++;
+            $cart_items[$existing_item]['total_amount'] = $cart_items[$existing_item]['quantity'] * $cart_items[$existing_item]['unit_amount'];
         } else {
-            $product = Product::where('id', $product_id)->first(['id', 'name', 'price', 'images']);
+            $product = Product::where('id', $product_id)->first(['id', 'name', 'price', 'image']);
             if ($product) {
                 $cart_items[] = [
                     'product_id' => $product->id,
                     'name' => $product->name,
-                    'image' => $product->images,
+                    'image' => $product->image[0] ?? null,
                     'quantity' => 1,
                     'unit_amount' => $product->price,
                     'total_amount' => $product->price,
@@ -75,7 +75,7 @@ class CartManagement {
         $cart_items = self::getCartItemsFromCookie();
         foreach ($cart_items as $key => $item) {
             if ($item['product_id'] == $product_id) {
-                $cart_items[$key]['quantity'] += 1;
+                $cart_items[$key]['quantity'] ++;
                 $cart_items[$key]['total_amount'] = $cart_items[$key]['quantity'] * $cart_items[$key]['unit_amount'];
             }
         }
@@ -89,7 +89,7 @@ class CartManagement {
         foreach ($cart_items as $key => $item) {
             if ($item['product_id'] == $product_id) {
                 if ($item['quantity'] > 1) {
-                    $cart_items[$key]['quantity'] -= 1;
+                    $cart_items[$key]['quantity'] --;
                     $cart_items[$key]['total_amount'] = $cart_items[$key]['quantity'] * $cart_items[$key]['unit_amount'];
                 }
             }
