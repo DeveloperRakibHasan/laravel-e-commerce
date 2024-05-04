@@ -19,7 +19,7 @@
                     <form wire:submit.prevent="save">
 
                         @if(session('error'))
-                            <div class="bg-red-600 text-sm text-gray-500 rounded-lg p-4" role="alert">
+                            <div class="bg-red-600 text-sm text-red-500 rounded-lg p-4" role="alert">
                                 {{session('error')}}
                             </div>
                         @endif
