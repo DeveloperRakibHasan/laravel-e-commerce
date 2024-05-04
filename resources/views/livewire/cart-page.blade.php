@@ -27,9 +27,9 @@
                                 <td class="py-4">{{Number::currency($item['unit_amount'], 'BDT')}}</td>
                                 <td class="py-4">
                                     <div class="flex items-center">
-                                        <button class="border rounded-md py-2 px-4 mr-2">-</button>
+                                        <button wire:click="decreaseQuantity({{ $item['product_id'] }})" class="border rounded-md py-2 px-4 mr-2">-</button>
                                         <span class="text-center w-8">{{$item['quantity']}}</span>
-                                        <button class="border rounded-md py-2 px-4 ml-2">+</button>
+                                        <button wire:click="increaseQuantity({{ $item['product_id'] }})" class="border rounded-md py-2 px-4 ml-2">+</button>
                                     </div>
                                 </td>
                                 <td class="py-4">
